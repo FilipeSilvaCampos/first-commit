@@ -1,4 +1,4 @@
-package com.example.conta;
+package com.example.conta.Fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.conta.Activitys.CreatHabitActivity;
+import com.example.conta.R;
 
 import java.util.HashMap;
 

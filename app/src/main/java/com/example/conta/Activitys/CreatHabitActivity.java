@@ -17,9 +17,9 @@ import android.widget.TextView;
 import com.example.conta.DataBase.AppDataBase;
 import com.example.conta.Objects.Habit;
 import com.example.conta.R;
-import com.example.conta.SelectIconFragment;
-import com.example.conta.TimePicker;
-import com.example.conta.recieves.recieve;
+import com.example.conta.Fragments.SelectIconFragment;
+import com.example.conta.Pickers.TimePicker;
+import com.example.conta.Recieves.recieve;
 
 import java.util.Calendar;
 import java.util.List;
@@ -53,11 +53,11 @@ public class CreatHabitActivity extends AppCompatActivity {
         descriptionCreatHabit = findViewById(R.id.descriptionCreatHabit);
         btnCreatHabit = findViewById(R.id.btnCreatHabit);
 
-        SelectIconFragment teste = new SelectIconFragment(imageCreatHabit);
-        FragmentManager testeManager = getSupportFragmentManager();
+        SelectIconFragment test = new SelectIconFragment(imageCreatHabit);
+        FragmentManager testManager = getSupportFragmentManager();
 
         imageCreatHabit.setOnClickListener((view -> {
-            teste.show(testeManager,"teste");
+            test.show(testManager,"teste");
         }));
 
         btnCreatHabit.setOnClickListener((view -> {
@@ -73,9 +73,12 @@ public class CreatHabitActivity extends AppCompatActivity {
 
     void creatHabit() {
         if (defineCreatAlarmHabit.isChecked()) {
-            Habit newHabit = new Habit(nameCreatHabit.getText().toString(),descriptionCreatHabit.getText().toString(),hourCreatHabit.getText().toString());
+            Habit newHabit = new Habit(nameCreatHabit.getText().toString(),
+                    descriptionCreatHabit.getText().toString(),
+                    hourCreatHabit.getText().toString());
             newHabit.setImageResource(resourceIdImageCreat);
             newHabit.setId(userHabits.size());
+            newHabit.setStateAlarm(true);
             db.habitDao().insert(newHabit);
 
             String[] hourBreakApart = newHabit.getHour().split(":");
@@ -95,9 +98,12 @@ public class CreatHabitActivity extends AppCompatActivity {
 
             finish();
         } else {
-            Habit newHabit = new Habit(nameCreatHabit.getText().toString(),descriptionCreatHabit.getText().toString(),hourCreatHabit.getText().toString());
+            Habit newHabit = new Habit(nameCreatHabit.getText().toString(),
+                    descriptionCreatHabit.getText().toString(),
+                    hourCreatHabit.getText().toString());
             newHabit.setImageResource(resourceIdImageCreat);
             newHabit.setId(userHabits.size());
+            newHabit.setStateAlarm(false);
             db.habitDao().insert(newHabit);
 
             finish();

@@ -194,12 +194,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (!nightUserHabits.isEmpty()) {
             nightFirstHabitContainer.setVisibility(View.VISIBLE);
-            Habit habit = afternoonUserHabits.get(0);
+            Habit habit = nightUserHabits.get(0);
             nightFirstHabitImage.setImageResource(habit.getImage());
             nightFirstHabitName.setText(habit.getName());
             nightFirstHabitHour.setText(habit.getHour());
             nightFirstHabitDescription.setText(habit.getDescription());
-            if (afternoonUserHabits.size() > 1) {
+            if (nightUserHabits.size() > 1) {
                 nightSecondHabitContainer.setVisibility(View.VISIBLE);
                 habit = afternoonUserHabits.get(1);
                 nightSecondHabitImage.setImageResource(habit.getImage());

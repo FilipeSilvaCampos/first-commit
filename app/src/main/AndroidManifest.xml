@@ -13,9 +13,6 @@
         android:theme="@style/Theme.Conta"
         tools:targetApi="31">
         <activity
-            android:name=".Activitys.DetailsHabit"
-            android:exported="false" />
-        <activity
             android:name=".Activitys.HabitsThisPartDay"
             android:exported="false" />
         <activity
@@ -32,7 +29,7 @@
         </activity>
 
         <receiver
-            android:name=".recieves.recieve"
+            android:name=".Recieves.recieve"
             android:enabled="true"
             android:exported="true"
             android:permission="TODO" />

@@ -26,13 +26,17 @@ public class Habit {
     @ColumnInfo(name = "partOfTheDay")
     private int partOfTheDay;
 
+    //Make it easier to sort: getPartInOrder - habitDao.class
     @ColumnInfo(name = "hourSun")
     private int hourSun;
 
+    @ColumnInfo(name = "stateAlarm")
+    private Boolean stateAlarm;
+
     public Habit(String name,String description,String hour) {
         this.name = name;
-        this.hour = hour;
         this.description = description;
+        this.hour = hour;
 
         int foramtedeHour = Integer.parseInt(hour.split(":")[0]);
         if (foramtedeHour > 4 && foramtedeHour < 12) {
@@ -68,6 +72,8 @@ public class Habit {
         this.hourSun = hourSun + minuteSun;
     }
 
+    public void setStateAlarm (boolean state) {this.stateAlarm = state;}
+
     public void setHourSun(int hourSun) {
         this.hourSun = hourSun;
     }
@@ -84,7 +90,6 @@ public class Habit {
         }
     }
 
-    /* Obs:metodo ainda imcompleto(planejamento): definido como padrão*/
     public void setImage(int integer) {this.image = integer;}
 
     public void setImageResource(int id) {this.image = id;}
@@ -102,4 +107,6 @@ public class Habit {
     public int getPartOfTheDay() {return (int) partOfTheDay;}
 
     public int getHourSun() {return (int) hourSun;}
+
+    public boolean getStateAlarm() {return (boolean) stateAlarm;}
 }

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.conta.Objects.Habit;
 
-@Database(entities = {Habit.class}, version = 4)
+@Database(entities = {Habit.class}, version = 7)
 public abstract class AppDataBase extends RoomDatabase {
     private static AppDataBase AppDataBaseInstance = null;
 
