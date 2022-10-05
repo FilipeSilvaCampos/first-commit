@@ -19,7 +19,7 @@ public class recieve extends BroadcastReceiver {
             Habit habit = db.habitDao().getId(intent.getExtras().getInt("habitID"));
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"canal")
-                    .setSmallIcon(com.google.android.material.R.drawable.notification_icon_background)
+                    .setSmallIcon(habit.getImage())
                     .setContentTitle(habit.getName())
                     .setContentText(habit.getDescription())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -28,7 +28,7 @@ public class recieve extends BroadcastReceiver {
             manager.notify(habit.getId(),builder.build());
 
         } catch (Exception e) {
-            Log.e("deu_errado",e.toString());
+            Log.e("EROC",e.toString());
         }
     }
 }

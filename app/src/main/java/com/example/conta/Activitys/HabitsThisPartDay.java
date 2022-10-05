@@ -26,6 +26,12 @@ public class HabitsThisPartDay extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setActvityTitle(partToAdapter);
+        ListAdapter listAdapter = new ListAdapter();
+        recyclerView.setAdapter(listAdapter);
+    }
+
+    void setActvityTitle (int partToAdapter) {
         if (partToAdapter == 0) {
             thisPart.setText("Manhã");
         } else if (partToAdapter == 1) {
@@ -33,7 +39,5 @@ public class HabitsThisPartDay extends AppCompatActivity {
         } else {
             thisPart.setText("Noite");
         }
-        ListAdapter listAdapter = new ListAdapter();
-        recyclerView.setAdapter(listAdapter);
     }
 }

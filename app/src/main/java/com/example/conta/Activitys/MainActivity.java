@@ -151,14 +151,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void setViews() {
+        morningContainer.setVisibility(View.GONE);
         morningFirstHabitContanier.setVisibility(View.GONE);
         morningSecondHabitContainer.setVisibility(View.GONE);
+
+        afternoonContainer.setVisibility(View.GONE);
         afternoonFirstHabitContainer.setVisibility(View.GONE);
         afternoonSecondHabitContainer.setVisibility(View.GONE);
+
+        nightContainer.setVisibility(View.GONE);
         nightFirstHabitContainer.setVisibility(View.GONE);
         nightSecondHabitContainer.setVisibility(View.GONE);
 
         if (!morningUserHabits.isEmpty()) {
+            morningContainer.setVisibility(View.VISIBLE);
             morningFirstHabitContanier.setVisibility(View.VISIBLE);
             Habit habit = morningUserHabits.get(0);
             morningFirstHabitImage.setImageResource(habit.getImage());
@@ -176,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!afternoonUserHabits.isEmpty()) {
+            afternoonContainer.setVisibility(View.VISIBLE);
             afternoonFirstHabitContainer.setVisibility(View.VISIBLE);
             Habit habit = afternoonUserHabits.get(0);
             afternoonFirstHabitImage.setImageResource(habit.getImage());
@@ -193,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (!nightUserHabits.isEmpty()) {
+            nightContainer.setVisibility(View.VISIBLE);
             nightFirstHabitContainer.setVisibility(View.VISIBLE);
             Habit habit = nightUserHabits.get(0);
             nightFirstHabitImage.setImageResource(habit.getImage());
