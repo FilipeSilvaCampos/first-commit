@@ -13,6 +13,13 @@
         android:theme="@style/Theme.Conta"
         tools:targetApi="31">
         <activity
+            android:name=".Activitys.List_of_sounds"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Activitys.HabitsThisPartDay"
             android:exported="false" />
         <activity

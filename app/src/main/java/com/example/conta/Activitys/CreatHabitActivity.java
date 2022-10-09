@@ -21,6 +21,8 @@ import com.example.conta.Fragments.SelectIconFragment;
 import com.example.conta.Pickers.TimePicker;
 import com.example.conta.Recieves.recieve;
 
+import org.w3c.dom.Text;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -42,6 +44,12 @@ public class CreatHabitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_habit);
+
+        TextView actualSound = findViewById(R.id.actualSound);
+        actualSound.setOnClickListener((view -> {
+            Intent teste = new Intent(this, List_of_sounds.class);
+            startActivity(teste);
+        }));
 
         db = AppDataBase.retrieveDatabaseInstance(this);
         userHabits = db.habitDao().getALL();

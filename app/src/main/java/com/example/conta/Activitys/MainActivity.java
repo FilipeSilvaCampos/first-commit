@@ -8,6 +8,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,15 @@ import com.example.conta.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+
+import com.spotify.android.appremote.api.ConnectionParams;
+import com.spotify.android.appremote.api.Connector;
+import com.spotify.android.appremote.api.SpotifyAppRemote;
+
+import com.spotify.protocol.client.Subscription;
+import com.spotify.protocol.types.Album;
+import com.spotify.protocol.types.PlayerState;
+import com.spotify.protocol.types.Track;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -65,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
     TextView nightSecondHabitDescription;
 
     FloatingActionButton toNewHabit;
+
+    private static final String REDIRECT_URI = "http://com.example.conta/callback";
+    private static SpotifyAppRemote mSpotifyAppRemote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +161,49 @@ public class MainActivity extends AppCompatActivity {
         afternoonUserHabits = db.habitDao().getPartInOrder(1);
         nightUserHabits = db.habitDao().getPartInOrder(2);
         setViews();
+    }
+
+
+    // Spotify implementaion - Studying API
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // We will start writing our code here.
+        ConnectionParams connectionParams =
+                new ConnectionParams.Builder(CLIENT_ID)
+                        .setRedirectUri(REDIRECT_URI)
+                        .showAuthView(true)
+                        .build();
+
+        SpotifyAppRemote.connect(this, connectionParams,
+                new Connector.ConnectionListener() {
+
+                    @Override
+                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+                        mSpotifyAppRemote = spotifyAppRemote;
+                        Log.d("MainActivity", "Connected!");
+
+                        connected();
+
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Log.e("MainActivity", throwable.getMessage(), throwable);
+
+                    }
+                });
+    }
+
+    private void connected() {
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+
     }
 
     void setViews() {
