@@ -33,25 +33,21 @@ public class Habit {
     @ColumnInfo(name = "stateAlarm")
     private Boolean stateAlarm;
 
-    public Habit(String name,String description,String hour) {
-        this.name = name;
-        this.description = description;
-        this.hour = hour;
+    @ColumnInfo(name = "typeSound")
+    private boolean typeSound;
 
-        int foramtedeHour = Integer.parseInt(hour.split(":")[0]);
-        if (foramtedeHour > 4 && foramtedeHour < 12) {
-            this.partOfTheDay = 0;
-        } else if (foramtedeHour >= 12 && foramtedeHour < 18) {
-            this.partOfTheDay = 1;
-        } else {
-            this.partOfTheDay = 2;
-        }
+    public Habit(int image,int id,String name,String description,String hour,boolean stateAlarm,boolean typeSound) {
+        setImage(image);
+        setId(id);
+        setName(name);
+        setDescription(description);
+        setHour(hour);
+        setStateAlarm(stateAlarm);
+        setTypeSound(typeSound);
 
-        int hourSun = Integer.parseInt(hour.split(":")[0]);
-        int minuteSun = Integer.parseInt(hour.split(":")[1]);
-
-        this.hourSun = hourSun + minuteSun;
     }
+
+    public void setImage(int integer) {this.image = integer;}
 
     public void setId(int id) {this.id = id;}
 
@@ -66,47 +62,51 @@ public class Habit {
     public void setHour(String hour) {
         this.hour = hour;
 
-        int hourSun = Integer.parseInt(hour.split(":")[0]);
-        int minuteSun = Integer.parseInt(hour.split(":")[1]);
+        int integerHour = Integer.parseInt(hour.split(":")[0]);
+        int integerMinute = Integer.parseInt(hour.split(":")[1]);
+        this.hourSun = integerHour + integerMinute;
 
-        this.hourSun = hourSun + minuteSun;
-    }
-
-    public void setStateAlarm (boolean state) {this.stateAlarm = state;}
-
-    public void setHourSun(int hourSun) {
-        this.hourSun = hourSun;
-    }
-
-    public void setPartOfTheDay(int partOfTheDay) {this.partOfTheDay = partOfTheDay;}
-
-    public void setPartOfTheDayByHour(int hour) {
-        if (hour > 4 && hour < 12) {
+        if (integerHour > 4 && integerHour < 12) {
             this.partOfTheDay = 0;
-        } else if (hour >= 12 && hour < 18) {
+        } else if (integerHour >= 12 && integerHour < 18) {
             this.partOfTheDay = 1;
         } else {
             this.partOfTheDay = 2;
         }
+
     }
 
-    public void setImage(int integer) {this.image = integer;}
+    public void setStateAlarm (boolean state) {this.stateAlarm = state;}
 
-    public void setImageResource(int id) {this.image = id;}
+    public void setHourSun(int hourSun) {this.hourSun = hourSun;}
 
-    public int getId() {return (Integer) id;}
+    public void setPartOfTheDay(int partOfTheDay) {this.partOfTheDay = partOfTheDay;}
 
-    public String getName() {return (String) name;}
+    public void setTypeSound(boolean type) {this.typeSound = type;}
 
-    public int getImage() {return (Integer) image;}
 
-    public String getDescription() {return (String) description;}
+    public int[] getIntegerHour() {
+        String[] hourBreakApart = hour.split(":");
 
-    public String getHour() {return (String) hour;}
+        return new int[]{Integer.parseInt(hourBreakApart[0]),Integer.parseInt(hourBreakApart[0])};
 
-    public int getPartOfTheDay() {return (int) partOfTheDay;}
+    }
 
-    public int getHourSun() {return (int) hourSun;}
+    public int getId() {return id;}
 
-    public boolean getStateAlarm() {return (boolean) stateAlarm;}
+    public String getName() {return name;}
+
+    public int getImage() {return image;}
+
+    public String getDescription() {return description;}
+
+    public String getHour() {return hour;}
+
+    public int getPartOfTheDay() {return partOfTheDay;}
+
+    public int getHourSun() {return hourSun;}
+
+    public boolean getStateAlarm() {return stateAlarm;}
+
+    public boolean getTypeSound() {return typeSound;}
 }

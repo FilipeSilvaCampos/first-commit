@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">Conta</string>
+    <string name="app_name">Task Manager</string>
+
+    <string name="home_text">Habit</string>
+
+    <string name="txt_hint_creat_title">Title</string>
+    <string name="txt_default_ringtone">default ringtone</string>
+    <string name="txt_spotify_ringtone">spotify ringtone</string>
+    <string name="txt_creat_description">Description</string>
+    <string name="txt_btn_creat">Creat</string>
+
+    <string name="txt_confirming_command">Do you want to clear this alarm</string>
+    <string name="txt_Denial">No</string>
+    <string name="txt_confirmation">Yes</string>
+    <string name="txt_on_alarm">Alarm activated</string>
+    <string name="txt_off_alarm">Alarm off</string>
+
+    <string name="txt_partday_morning">Morning</string>
+    <string name="txt_partday_afternoon">Afternoon</string>
+    <string name="txt_partday_night">Night</string>
 </resources>

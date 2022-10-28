@@ -33,7 +33,7 @@
                         app:cardCornerRadius="20dp">
 
                         <ImageView
-                            android:id="@+id/coffeIcon"
+                            android:id="@+id/icnCoffe"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:background="#4B878080"
@@ -47,11 +47,11 @@
                         app:cardCornerRadius="20dp">
 
                         <ImageView
-                            android:id="@+id/icon2"
+                            android:id="@+id/icnBallons"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:background="#4B878080"
-                            tools:srcCompat="@drawable/ic_launcher_foreground" />
+                            app:srcCompat="@drawable/balloons" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView

@@ -13,7 +13,7 @@
         android:layout_marginStart="178dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="171dp"
-        android:text="Habitos"
+        android:text="@string/home_text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,12 +50,13 @@
                 android:layout_height="80dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/morningcontainerdrawable" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/morningFirstContainerHabit"
+                android:id="@+id/morningFirstHabitContainer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +76,7 @@
                         app:cardCornerRadius="20dp">
 
                         <ImageView
-                            android:id="@+id/mornigFirstHabitImage"
+                            android:id="@+id/morningFirstHabitImage"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             app:srcCompat="@drawable/ic_launcher_background" />
@@ -119,7 +120,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/morningFirstContainerHabit">
+                app:layout_constraintTop_toBottomOf="@id/morningFirstHabitContainer">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -133,7 +134,7 @@
                         app:cardCornerRadius="20dp">
 
                         <ImageView
-                            android:id="@+id/mornigSecondHabitImage"
+                            android:id="@+id/morningSecondHabitImage"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             app:srcCompat="@drawable/ic_launcher_background" />
@@ -194,10 +195,11 @@
                 android:id="@+id/afternoonImage"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                app:srcCompat="@drawable/afternoon_container_habit" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/afternoonFirstHabitContainer"
@@ -209,8 +211,8 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#00D34A4A">
+                    android:layout_height="46dp"
+                    android:background="@drawable/afternoon_first_habit_background">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/afternoonFirstHabitImageContainer"
@@ -261,14 +263,14 @@
                 android:id="@+id/afternoonSecondHabitContainer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/afternoonFirstHabitContainer">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="46dp"
+                    android:background="@drawable/afternoon_first_habit_background">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/afternoonContainerSecondHabitImage"
@@ -338,13 +340,14 @@
                 android:id="@+id/nightImage"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
+                app:srcCompat="@drawable/night_image_container" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/nightFirstHabitContanier"
+                android:id="@+id/nightFirstHabitContainer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -353,7 +356,8 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="46dp"
+                    android:background="@drawable/night_habit_image">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/nightFirstHabitImageContanier"
@@ -404,14 +408,14 @@
                 android:id="@+id/nightSecondHabitContainer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nightFirstHabitContanier">
+                app:layout_constraintTop_toBottomOf="@id/nightFirstHabitContainer">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="46dp"
+                    android:background="@drawable/night_habit_image">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/nightContainerSecondHabitImage"

@@ -1,275 +1,157 @@
 package com.example.conta.Activitys;
 
+import static com.example.conta.Recieves.recieve.CLIENT_ID;
+import static com.example.conta.Recieves.recieve.REDIRECT_URI;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.conta.DataBase.AppDataBase;
 import com.example.conta.Objects.Habit;
-import com.example.conta.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.conta.databinding.ActivityMainBinding;
+import com.spotify.android.appremote.api.ConnectionParams;
 
 import java.util.List;
-
-import com.spotify.android.appremote.api.ConnectionParams;
-import com.spotify.android.appremote.api.Connector;
-import com.spotify.android.appremote.api.SpotifyAppRemote;
-
-import com.spotify.protocol.client.Subscription;
-import com.spotify.protocol.types.Album;
-import com.spotify.protocol.types.PlayerState;
-import com.spotify.protocol.types.Track;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    public static AppDataBase db;
+    private AppDataBase db;
     List<Habit> morningUserHabits;
     List<Habit> afternoonUserHabits;
     List<Habit> nightUserHabits;
 
-    CardView morningContainer;
-    CardView afternoonContainer;
-    CardView nightContainer;
-
-    CardView morningFirstHabitContanier;
-    ImageView morningFirstHabitImage;
-    TextView morningFirstHabitName;
-    TextView morningFirstHabitHour;
-    TextView morningFirstHabitDescription;
-    CardView morningSecondHabitContainer;
-    ImageView morningSecondHabitImage;
-    TextView morningSecondHabitName;
-    TextView morningSecondHabitHour;
-    TextView morningSecondHabitDescription;
-
-    CardView afternoonFirstHabitContainer;
-    ImageView afternoonFirstHabitImage;
-    TextView afternoonFirstHabitName;
-    TextView afternoonFirstHabitHour;
-    TextView afternoonFirstHabitDescription;
-    CardView afternoonSecondHabitContainer;
-    ImageView afternoonSecondHabitImage;
-    TextView afternoonSecondHabitName;
-    TextView afternoonSecondHabitHour;
-    TextView afternoonSecondHabitDescription;
-
-    CardView nightFirstHabitContainer;
-    ImageView nightFirstHabitImage;
-    TextView nightFirstHabitName;
-    TextView nightFirstHabitHour;
-    TextView nightFirstHabitDescription;
-    CardView nightSecondHabitContainer;
-    ImageView nightSecondHabitImage;
-    TextView nightSecondHabitName;
-    TextView nightSecondHabitHour;
-    TextView nightSecondHabitDescription;
-
-    FloatingActionButton toNewHabit;
-
-    private static final String REDIRECT_URI = "http://com.example.conta/callback";
-    private static SpotifyAppRemote mSpotifyAppRemote;
-
+    ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        Intent fullListIntent = new Intent(this, HabitsThisPartDay.class);
-        morningContainer = findViewById(R.id.morningContainer);
-        afternoonContainer = findViewById(R.id.afternoonContainer);
-        nightContainer = findViewById(R.id.nightContainer);
+        spotifyPermission();
 
-        morningFirstHabitContanier = findViewById(R.id.morningFirstContainerHabit);
-        morningFirstHabitImage = findViewById(R.id.mornigFirstHabitImage);
-        morningFirstHabitName = findViewById(R.id.morningFirstHabitName);
-        morningFirstHabitHour = findViewById(R.id.morningFirstHabitHour);
-        morningFirstHabitDescription = findViewById(R.id.morningFirstHabitDescription);
-        morningSecondHabitContainer = findViewById(R.id.morningSecondHabitContainer);
-        morningSecondHabitImage = findViewById(R.id.mornigSecondHabitImage);
-        morningSecondHabitName = findViewById(R.id.morningSecondHabitName);
-        morningSecondHabitHour = findViewById(R.id.morningSecondHabitHour);
-        morningSecondHabitDescription = findViewById(R.id.morningSecondHabitDescription);
-
-        afternoonFirstHabitContainer = findViewById(R.id.afternoonFirstHabitContainer);
-        afternoonFirstHabitImage = findViewById(R.id.afternoonFirstHabitImage);
-        afternoonFirstHabitName = findViewById(R.id.afternoonFirstHabitName);
-        afternoonFirstHabitHour = findViewById(R.id.afternoonFirstHabitHour);
-        afternoonFirstHabitDescription = findViewById(R.id.afternoonFirstHabitDescription);
-        afternoonSecondHabitContainer = findViewById(R.id.afternoonSecondHabitContainer);
-        afternoonSecondHabitImage = findViewById(R.id.afternoonSecondHabitImage);
-        afternoonSecondHabitName = findViewById(R.id.afternoonSecondHabitName);
-        afternoonSecondHabitHour = findViewById(R.id.afternoonSecondHabitHour);
-        afternoonSecondHabitDescription = findViewById(R.id.afternoonSecondHabitDescription);
-
-        nightFirstHabitContainer = findViewById(R.id.nightFirstHabitContanier);
-        nightFirstHabitImage = findViewById(R.id.nightFirstHabitImage);
-        nightFirstHabitName = findViewById(R.id.nightFirstHabitName);
-        nightFirstHabitHour = findViewById(R.id.nightFirstHabitHour);
-        nightFirstHabitDescription = findViewById(R.id.nightFirstHabitDescription);
-        nightSecondHabitContainer = findViewById(R.id.nightSecondHabitContainer);
-        nightSecondHabitImage = findViewById(R.id.nightSecondHabitImage);
-        nightSecondHabitName = findViewById(R.id.nightSecondHabitName);
-        nightSecondHabitHour = findViewById(R.id.nightSecondHabitHour);
-        nightSecondHabitDescription = findViewById(R.id.nightSecondHabitDescription);
-
-        toNewHabit = findViewById(R.id.btnCreatNewHabit);
-
-        toNewHabit.setOnClickListener((view -> {
+        binding.btnCreatNewHabit.setOnClickListener((view -> {
             Intent intent = new Intent(this, CreatHabitActivity.class);
             startActivity(intent);
         }));
 
-        morningContainer.setOnClickListener((view -> {
-            HabitsThisPartDay.partToAdapter = 0;
-            startActivity(fullListIntent);
-        }));
+        binding.morningContainer.setOnClickListener((view -> listHabitPartDay(0)));
 
-        afternoonContainer.setOnClickListener((view -> {
-            HabitsThisPartDay.partToAdapter = 1;
-            startActivity(fullListIntent);
-        }));
+        binding.afternoonContainer.setOnClickListener((view -> listHabitPartDay(1)));
 
-        nightContainer.setOnClickListener((view -> {
-            HabitsThisPartDay.partToAdapter = 2;
-            startActivity(fullListIntent);
-        }));
+        binding.nightContainer.setOnClickListener((view -> listHabitPartDay(2)));
 
-        //CANAL PARA NOTIFICAÇÕES
+        //CHANNEL FOR NOTIFICATIONS
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("canal", "canal", NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription("canal de teste");
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        setUpActivity();
+
+    }
+
+    void setUpActivity() {
         db = AppDataBase.retrieveDatabaseInstance(this);
         morningUserHabits = db.habitDao().getPartInOrder(0);
         afternoonUserHabits = db.habitDao().getPartInOrder(1);
         nightUserHabits = db.habitDao().getPartInOrder(2);
         setViews();
-    }
-
-
-    // Spotify implementaion - Studying API
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // We will start writing our code here.
-        ConnectionParams connectionParams =
-                new ConnectionParams.Builder(CLIENT_ID)
-                        .setRedirectUri(REDIRECT_URI)
-                        .showAuthView(true)
-                        .build();
-
-        SpotifyAppRemote.connect(this, connectionParams,
-                new Connector.ConnectionListener() {
-
-                    @Override
-                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
-                        mSpotifyAppRemote = spotifyAppRemote;
-                        Log.d("MainActivity", "Connected!");
-
-                        connected();
-
-                    }
-
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        Log.e("MainActivity", throwable.getMessage(), throwable);
-
-                    }
-                });
-    }
-
-    private void connected() {
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+    void spotifyPermission() {
+        new ConnectionParams.Builder(CLIENT_ID)
+                .setRedirectUri(REDIRECT_URI)
+                .showAuthView(true)
+                .build();
 
+    }
+
+    void listHabitPartDay(int part) {
+       Intent fullListIntent = new Intent(this, HabitsThisPartDay.class);
+       HabitsThisPartDay.partToAdapter = part;
+       startActivity(fullListIntent);
 
     }
 
     void setViews() {
-        morningContainer.setVisibility(View.GONE);
-        morningFirstHabitContanier.setVisibility(View.GONE);
-        morningSecondHabitContainer.setVisibility(View.GONE);
+        binding.morningContainer.setVisibility(View.GONE);
+        binding.morningFirstHabitContainer.setVisibility(View.GONE);
+        binding.morningSecondHabitContainer.setVisibility(View.GONE);
 
-        afternoonContainer.setVisibility(View.GONE);
-        afternoonFirstHabitContainer.setVisibility(View.GONE);
-        afternoonSecondHabitContainer.setVisibility(View.GONE);
+        binding.afternoonContainer.setVisibility(View.GONE);
+        binding.afternoonFirstHabitContainer.setVisibility(View.GONE);
+        binding.afternoonSecondHabitContainer.setVisibility(View.GONE);
 
-        nightContainer.setVisibility(View.GONE);
-        nightFirstHabitContainer.setVisibility(View.GONE);
-        nightSecondHabitContainer.setVisibility(View.GONE);
+        binding.nightContainer.setVisibility(View.GONE);
+        binding.nightFirstHabitContainer.setVisibility(View.GONE);
+        binding.nightSecondHabitContainer.setVisibility(View.GONE);
 
         if (!morningUserHabits.isEmpty()) {
-            morningContainer.setVisibility(View.VISIBLE);
-            morningFirstHabitContanier.setVisibility(View.VISIBLE);
+            binding.morningContainer.setVisibility(View.VISIBLE);
+            binding.morningFirstHabitContainer.setVisibility(View.VISIBLE);
             Habit habit = morningUserHabits.get(0);
-            morningFirstHabitImage.setImageResource(habit.getImage());
-            morningFirstHabitName.setText(habit.getName());
-            morningFirstHabitHour.setText(habit.getHour());
-            morningFirstHabitDescription.setText(habit.getDescription());
+            binding.morningFirstHabitImage.setImageResource(habit.getImage());
+            binding.morningFirstHabitName.setText(habit.getName());
+            binding.morningFirstHabitHour.setText(habit.getHour());
+            binding.morningFirstHabitDescription.setText(habit.getDescription());
             if (morningUserHabits.size() > 1) {
-                morningSecondHabitContainer.setVisibility(View.VISIBLE);
+                binding.morningSecondHabitContainer.setVisibility(View.VISIBLE);
                 habit = morningUserHabits.get(1);
-                morningSecondHabitImage.setImageResource(habit.getImage());
-                morningSecondHabitName.setText(habit.getName());
-                morningSecondHabitHour.setText(habit.getHour());
-                morningSecondHabitDescription.setText(habit.getDescription());
+                binding.morningSecondHabitImage.setImageResource(habit.getImage());
+                binding.morningSecondHabitName.setText(habit.getName());
+                binding.morningSecondHabitHour.setText(habit.getHour());
+                binding.morningSecondHabitDescription.setText(habit.getDescription());
             }
         }
 
         if (!afternoonUserHabits.isEmpty()) {
-            afternoonContainer.setVisibility(View.VISIBLE);
-            afternoonFirstHabitContainer.setVisibility(View.VISIBLE);
+            binding.afternoonContainer.setVisibility(View.VISIBLE);
+            binding.afternoonFirstHabitContainer.setVisibility(View.VISIBLE);
             Habit habit = afternoonUserHabits.get(0);
-            afternoonFirstHabitImage.setImageResource(habit.getImage());
-            afternoonFirstHabitName.setText(habit.getName());
-            afternoonFirstHabitHour.setText(habit.getHour());
-            afternoonFirstHabitDescription.setText(habit.getDescription());
+            binding.afternoonFirstHabitImage.setImageResource(habit.getImage());
+            binding.afternoonFirstHabitName.setText(habit.getName());
+            binding.afternoonFirstHabitHour.setText(habit.getHour());
+            binding.afternoonFirstHabitDescription.setText(habit.getDescription());
             if (afternoonUserHabits.size() > 1) {
-                afternoonSecondHabitContainer.setVisibility(View.VISIBLE);
+                binding.afternoonSecondHabitContainer.setVisibility(View.VISIBLE);
                 habit = afternoonUserHabits.get(1);
-                afternoonSecondHabitImage.setImageResource(habit.getImage());
-                afternoonSecondHabitName.setText(habit.getName());
-                afternoonSecondHabitHour.setText(habit.getHour());
-                afternoonSecondHabitDescription.setText(habit.getDescription());
+                binding.afternoonSecondHabitImage.setImageResource(habit.getImage());
+                binding.afternoonSecondHabitName.setText(habit.getName());
+                binding.afternoonSecondHabitHour.setText(habit.getHour());
+                binding.afternoonSecondHabitDescription.setText(habit.getDescription());
             }
         }
 
         if (!nightUserHabits.isEmpty()) {
-            nightContainer.setVisibility(View.VISIBLE);
-            nightFirstHabitContainer.setVisibility(View.VISIBLE);
+            binding.nightContainer.setVisibility(View.VISIBLE);
+            binding.nightFirstHabitContainer.setVisibility(View.VISIBLE);
             Habit habit = nightUserHabits.get(0);
-            nightFirstHabitImage.setImageResource(habit.getImage());
-            nightFirstHabitName.setText(habit.getName());
-            nightFirstHabitHour.setText(habit.getHour());
-            nightFirstHabitDescription.setText(habit.getDescription());
+            binding.nightFirstHabitImage.setImageResource(habit.getImage());
+            binding.nightFirstHabitName.setText(habit.getName());
+            binding.nightFirstHabitHour.setText(habit.getHour());
+            binding.nightFirstHabitDescription.setText(habit.getDescription());
             if (nightUserHabits.size() > 1) {
-                nightSecondHabitContainer.setVisibility(View.VISIBLE);
+                binding.nightSecondHabitContainer.setVisibility(View.VISIBLE);
                 habit = afternoonUserHabits.get(1);
-                nightSecondHabitImage.setImageResource(habit.getImage());
-                nightSecondHabitName.setText(habit.getName());
-                nightSecondHabitHour.setText(habit.getHour());
-                nightSecondHabitDescription.setText(habit.getDescription());
+                binding.nightSecondHabitImage.setImageResource(habit.getImage());
+                binding.nightSecondHabitName.setText(habit.getName());
+                binding.nightSecondHabitHour.setText(habit.getHour());
+                binding.nightSecondHabitDescription.setText(habit.getDescription());
             }
         }
 

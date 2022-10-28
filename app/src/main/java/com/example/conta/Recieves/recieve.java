@@ -10,8 +10,15 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.conta.DataBase.AppDataBase;
 import com.example.conta.Objects.Habit;
+import com.spotify.android.appremote.api.ConnectionParams;
+import com.spotify.android.appremote.api.Connector;
+import com.spotify.android.appremote.api.SpotifyAppRemote;
 
 public class recieve extends BroadcastReceiver {
+    public static final String CLIENT_ID = "6306cba62027448a902d0c50291f7a09";
+    public static final String REDIRECT_URI = "http://com.example.conta/callback";
+    SpotifyAppRemote mSpotifyAppRemote;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
@@ -27,8 +34,38 @@ public class recieve extends BroadcastReceiver {
             NotificationManagerCompat manager = NotificationManagerCompat.from(context);
             manager.notify(habit.getId(),builder.build());
 
+            if (habit.getTypeSound()) {
+                spotifyNotification(context);
+            }
+
         } catch (Exception e) {
             Log.e("EROC",e.toString());
         }
     }
+
+    void spotifyNotification(Context context) {
+        ConnectionParams connectionParams =
+                new ConnectionParams.Builder(CLIENT_ID)
+                        .setRedirectUri(REDIRECT_URI)
+                        .build();
+
+        SpotifyAppRemote.connect(context,connectionParams,
+                new Connector.ConnectionListener() {
+
+                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+                        mSpotifyAppRemote = spotifyAppRemote;
+                        Log.d("success", "Connected! Yay!");
+
+                        mSpotifyAppRemote.getPlayerApi().resume();
+
+                    }
+
+                    public void onFailure(Throwable throwable) {
+                        Log.e("failure", throwable.getMessage(), throwable);
+
+                    }
+                });
+    }
+
 }
+
