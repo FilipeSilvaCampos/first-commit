@@ -7,13 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.TextView;
 
-import com.example.conta.R;
 import com.example.conta.UI.Adapters.ItemSpotifyAdapter;
 import com.example.conta.Data.SpotifyApi;
 import com.example.conta.Domain.Items;
-import com.example.conta.Domain.Tracks;
+import com.example.conta.Domain.SpotifyTypeItems;
 import com.example.conta.databinding.ActivitySelectSpotifyItemBinding;
 
 import retrofit2.Call;
@@ -83,9 +81,9 @@ public class SelectSpotifyItemActivity extends AppCompatActivity {
                 }
             });
         } else {
-            spotifyApi.getTracksSearch(token, search).enqueue(new Callback<Tracks>() {
+            spotifyApi.getTracksSearch(token, search).enqueue(new Callback<SpotifyTypeItems>() {
                 @Override
-                public void onResponse(Call<Tracks> call, Response<Tracks> response) {
+                public void onResponse(Call<SpotifyTypeItems> call, Response<SpotifyTypeItems> response) {
                     if (response.body() != null) {
                         spotifyAdapter = new ItemSpotifyAdapter(response.body().getUniqueList());
                         binding.rvSpotifyList.setAdapter(spotifyAdapter);
@@ -94,7 +92,7 @@ public class SelectSpotifyItemActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<Tracks> call, Throwable t) {
+                public void onFailure(Call<SpotifyTypeItems> call, Throwable t) {
 
                 }
             });
