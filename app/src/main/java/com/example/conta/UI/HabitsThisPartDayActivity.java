@@ -1,16 +1,16 @@
-package com.example.conta.Activitys;
+package com.example.conta.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
 
-import com.example.conta.Adapters.ListAdapter;
-import com.example.conta.DataBase.AppDataBase;
+import com.example.conta.UI.Adapters.HabitsListAdapter;
+import com.example.conta.Data.AppDataBase;
 import com.example.conta.R;
 import com.example.conta.databinding.ActivityHabitsThisPartDayBinding;
 
-public class HabitsThisPartDay extends AppCompatActivity {
+public class HabitsThisPartDayActivity extends AppCompatActivity {
 
     public static int partToAdapter;
     private ActivityHabitsThisPartDayBinding binding;
@@ -29,8 +29,8 @@ public class HabitsThisPartDay extends AppCompatActivity {
         setActvityTitle(partToAdapter);
 
         AppDataBase db = AppDataBase.retrieveDatabaseInstance(this);
-        ListAdapter listAdapter = new ListAdapter(this, db,partToAdapter);
-        binding.rvHabitsPart.setAdapter(listAdapter);
+        HabitsListAdapter habitsListAdapter = new HabitsListAdapter(db, partToAdapter, this);
+        binding.rvHabitsPart.setAdapter(habitsListAdapter);
 
     }
 

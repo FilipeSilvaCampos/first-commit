@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activitys.HabitsThisPartDay">
+    tools:context=".UI.HabitsThisPartDayActivity">
 
     <TextView
         android:id="@+id/tvThisPart"
@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
-        tools:listitem="@layout/habitsonlist"
+        tools:listitem="@layout/habits_list"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

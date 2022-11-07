@@ -1,4 +1,4 @@
-package com.example.conta.Fragments;
+package com.example.conta.UI.Fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -8,7 +8,8 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.conta.Activitys.CreatHabitActivity;
+import com.bumptech.glide.Glide;
+import com.example.conta.UI.CreatHabitActivity;
 import com.example.conta.R;
 import com.example.conta.databinding.SelecetImageHabitBinding;
 
@@ -16,9 +17,8 @@ import java.util.HashMap;
 
 public class SelectIconFragment extends DialogFragment {
 
-    private SelecetImageHabitBinding binding;
-    private final HashMap imageMap;
-    private ImageView imageView;
+    private final HashMap<String, Integer> imageMap;
+    private final ImageView imageView;
 
     public SelectIconFragment(ImageView imageView) {
         this.imageView = imageView;
@@ -32,7 +32,7 @@ public class SelectIconFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        binding = SelecetImageHabitBinding.inflate(LayoutInflater.from(getContext()));
+        com.example.conta.databinding.SelecetImageHabitBinding binding = SelecetImageHabitBinding.inflate(LayoutInflater.from(getContext()));
         Dialog dialog = new Dialog(this.getContext());
         dialog.setContentView(binding.getRoot());
 
@@ -47,10 +47,10 @@ public class SelectIconFragment extends DialogFragment {
         return dialog;
     }
 
-    void icnSelectd(Object value) {
-        int resource = (Integer) value;
-        imageView.setImageResource(resource);
-        CreatHabitActivity.resourceIdImageCreat = resource;
+    void icnSelectd(Integer resource) {
+        Glide.with(getContext()).load(resource).into(imageView);
+        CreatHabitActivity.resourceImage = resource;
+        dismiss();
 
     }
 

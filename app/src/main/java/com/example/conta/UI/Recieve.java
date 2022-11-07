@@ -1,4 +1,4 @@
-package com.example.conta.Recieves;
+package com.example.conta.UI;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,33 +8,35 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.conta.DataBase.AppDataBase;
-import com.example.conta.Objects.Habit;
+import com.example.conta.Data.AppDataBase;
+import com.example.conta.Domain.Habit;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
+import com.spotify.android.appremote.api.PlayerApi;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
 
-public class recieve extends BroadcastReceiver {
+public class Recieve extends BroadcastReceiver {
     public static final String CLIENT_ID = "6306cba62027448a902d0c50291f7a09";
     public static final String REDIRECT_URI = "http://com.example.conta/callback";
-    SpotifyAppRemote mSpotifyAppRemote;
+    private SpotifyAppRemote mSpotifyAppRemote;
+    private Habit habit;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
             AppDataBase db = AppDataBase.retrieveDatabaseInstance(context);
-            Habit habit = db.habitDao().getId(intent.getExtras().getInt("habitID"));
+            habit = db.habitDao().getId(intent.getExtras().getInt("habitID"));
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"canal")
-                    .setSmallIcon(habit.getImage())
-                    .setContentTitle(habit.getName())
+                    .setSmallIcon(habit.getImageResource())
+                    .setContentTitle(habit.getTitle())
                     .setContentText(habit.getDescription())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
             NotificationManagerCompat manager = NotificationManagerCompat.from(context);
             manager.notify(habit.getId(),builder.build());
 
-            if (habit.getTypeSound()) {
+            if (habit.getIsSpotify()) {
                 spotifyNotification(context);
             }
 
@@ -56,7 +58,7 @@ public class recieve extends BroadcastReceiver {
                         mSpotifyAppRemote = spotifyAppRemote;
                         Log.d("success", "Connected! Yay!");
 
-                        mSpotifyAppRemote.getPlayerApi().resume();
+                        mSpotifyAppRemote.getPlayerApi().play(habit.getPlaylistUri(), PlayerApi.StreamType.ALARM);
 
                     }
 

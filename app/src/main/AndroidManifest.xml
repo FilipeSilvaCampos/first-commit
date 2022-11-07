@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,13 +15,20 @@
         android:theme="@style/Theme.Conta"
         tools:targetApi="31">
         <activity
-            android:name=".Activitys.HabitsThisPartDay"
+            android:name=".UI.SelectSpotifyItemActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UI.HabitsThisPartDayActivity"
             android:exported="false" />
         <activity
-            android:name=".Activitys.CreatHabitActivity"
+            android:name=".UI.CreatHabitActivity"
             android:exported="false" />
         <activity
-            android:name=".Activitys.MainActivity"
+            android:name=".UI.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +38,7 @@
         </activity>
 
         <receiver
-            android:name=".Recieves.recieve"
+            android:name=".UI.Recieve"
             android:enabled="true"
             android:exported="true"
             android:permission="TODO" />

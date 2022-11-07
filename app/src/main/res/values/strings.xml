@@ -18,4 +18,5 @@
     <string name="txt_partday_morning">Morning</string>
     <string name="txt_partday_afternoon">Afternoon</string>
     <string name="txt_partday_night">Night</string>
+    <string name="txt_type_searchs">Music, Playlist, Artist...</string>
 </resources>

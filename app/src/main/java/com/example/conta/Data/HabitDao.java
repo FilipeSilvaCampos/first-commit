@@ -1,4 +1,4 @@
-package com.example.conta.DataBase;
+package com.example.conta.Data;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.conta.Objects.Habit;
+import com.example.conta.Domain.Habit;
 
 import java.util.List;
 

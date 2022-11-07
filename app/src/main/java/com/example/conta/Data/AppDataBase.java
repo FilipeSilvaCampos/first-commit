@@ -1,4 +1,4 @@
-package com.example.conta.DataBase;
+package com.example.conta.Data;
 
 import android.content.Context;
 
@@ -6,9 +6,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.conta.Objects.Habit;
+import com.example.conta.Domain.Habit;
 
-@Database(entities = {Habit.class}, version = 8)
+@Database(entities = {Habit.class}, version = 13)
 public abstract class AppDataBase extends RoomDatabase {
     private static AppDataBase AppDataBaseInstance = null;
 

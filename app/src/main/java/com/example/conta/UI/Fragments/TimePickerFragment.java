@@ -1,4 +1,4 @@
-package com.example.conta.Pickers;
+package com.example.conta.UI.Fragments;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -6,14 +6,16 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Calendar;
 
-public class TimePicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
     TextView definir;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar c = Calendar.getInstance();
@@ -30,7 +32,7 @@ public class TimePicker extends DialogFragment implements TimePickerDialog.OnTim
             definir.setText(hourComplete);
     }
 
-    public TimePicker(TextView set) {
+    public TimePickerFragment(TextView set) {
         definir = set;
     }
 }
